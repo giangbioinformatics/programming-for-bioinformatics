@@ -1,8 +1,6 @@
-#!/bin/bash
 # ref: https://github.com/LeCoupa/awesome-cheatsheets/blob/master/languages/bash.sh
-##############################################################################
+
 # SHORTCUTS and HISTORY
-##############################################################################
 CTRL+Alt+T # open new terminal
 CTRL+D     # close or deletes one character backward or logs out of current session, similar to exit
 
@@ -17,9 +15,8 @@ up and down arror  # show command line before and after
 Tab     # Quickly use the recommend syntax
 <command> --help         # shows docunmentations
 
-##############################################################################
+
 # DIRECTORY AND FILES COMMANDS
-##############################################################################
 mv <filename1> <dest>         # move or rename a file
 cp <-r> <filename1> <dest>    # copies a file/folder with r (recursively) with files or folder in side
 rm <filename>                 # removes a file

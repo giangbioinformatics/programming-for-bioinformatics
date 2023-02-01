@@ -1,80 +1,134 @@
-# ref: https://github.com/LeCoupa/awesome-cheatsheets/blob/master/languages/bash.sh
+# [Bashcript reference](https://github.com/LeCoupa/awesome-cheatsheets/blob/master/languages/bash.sh)
 
-# SHORTCUTS and HISTORY
-CTRL+Alt+T # open new terminal
-CTRL+D     # close or deletes one character backward or logs out of current session, similar to exit
+## 01.Shortcut and history
+| Shortcut  | Function |
+| ------------- | ------------- |
+| CTRL+Alt+T    | opens new terminal|
+| CTRL+D  |  closes or deletes one character backward or logs out of current session, similar to exit  |
+| CTRL+A   |  moves to beginning of line  |
+| CTRL+C    |  halts the current command  |
+| CTRL+E |  moves to end of line  |
+| CTRL+L  |  clears screen and redisplay the line   |
+| CTRL+U  |  kills backward from point to the beginning of line   |
+| <- or ->|  move left or right on current command  |
+| up and down arrow  |  show command line before and after     |
+| Tab   |  Quickly use the recommend syntax     |
+| < command > --help   |  shows docunmentations or manual of tools   |
 
-CTRL+A     # move to beginning of line
-CTRL+C     # halts the current command
+## 02.Directory and file related command          
+| Command                              | Function                                                               | Example                      |
+|--------------------------------------|------------------------------------------------------------------------|------------------------------|
+| mkdir <new directory>                | makes a new directory                                                  | mkdir giang                  |
+| mkdir -p <new_directory with parent> | makes a new directory with parents                                     | mkdir -p giang/giang1/giang2 |
+| mv <filename1> <dest>                | moves or renames a file                                                | mv giang/giang1/giang2 giang |
+| cp <-r> <filename1> <dest>           | copies a file/folder with r (recursively) with files or folder in side | cp -r giang copied_giang     |
+| rm <filename>                        | removes a file                                                         | rm giang                     |
+| rm -rf                               | removes files with forces                                              | rm -rf copied_giang          |
+| cd                                   | changes to home                                                        | cd                           |
+| cd <dirname>                         | changes directory                                                      | cd /home                     |
+| pwd                                  | tells you where you currently are                                      | pwd                         
 
-CTRL+E     # moves to end of line
-CTRL+L     # clears screen and redisplay the line
-CTRL+U     # kills backward from point to the beginning of line
-<- or -> To        # move left or right
-up and down arror  # show command line before and after
-Tab     # Quickly use the recommend syntax
-<command> --help         # shows docunmentations
-
-
-# DIRECTORY AND FILES COMMANDS
-mv <filename1> <dest>         # move or rename a file
-cp <-r> <filename1> <dest>    # copies a file/folder with r (recursively) with files or folder in side
-rm <filename>                 # removes a file
-mkdir <dirname>               # makes a new directory
-mkdir -p <dirname>            # makes a new directory recursively 
-cd                            # changes to home
-cd ..                         # changes to the parent directory
-cd <dirname>                  # changes directory
-cp -r <dir1> <dir2>           # copy <dir1> into <dir2> including sub-directories
-pwd                           # tells you where you currently are
-
-##############################################################################
-# BASH BASICS
-##############################################################################
-
-
-
+## 03.Basic bash
+```
 which <program_name>  # finds locations where programs or scripts are exported
+```
+```
 clear                 # clears content on window (hide displayed lines)
+```
+```
 history               # shows command line history
-
-##############################################################################
-# FILE COMMANDS ONLY
-##############################################################################
+````
+### 03.1 File processing only
+```
 ls                            # lists your files in current directory, ls <dir> to print files in a specific directory
+```
+```
 ls -lah                       # lists your files in 'long format',human readable file size and all files (even hidden files) 
+```
+```
 ln -s <filename> <link>       # creates symbolic link to file
+```
+```
 tree                          # show directories and subdirectories in easilly readable file tree
+```
+```
 tree <foldername>             # show directories and subdirectories in easilly readable file tree in a folder
+```
+```
 tree <foldername> -L <level>  # show directories and subdirectories in easilly readable file tree in a folder with level options (1,2,3) to not show all
+```
+```
 touch <filename>              # creates or updates (edit) your file
-
+```
+```
 nl <file.sh>                  # shows number of lines in file
+```
+```
 cat <filename>                # displays file raw content (will not be interpreted)
+```
+```
 cat filename1 > filename2     # Copy filename1 to filename2
+```
+```
 cat filename1 filename2 >> filename2   # merge files texts together 
-# Note: zcat can be used as cat but for zip file
+```
+__Note: zcat can be used as cat but for zip file
 
+```
 head -n<number of line> <filename>     # outputs the first lines of file (default: 10 lines) , may skip number of line options
+```
+```
 tail -n<number of line> <filename>     # outputs the last lines of file (useful with -f option) (default: 10 lines) may skip number of line options
-wc <filename>                 # tells you how many lines, words and characters there are in a file. Use -lwc (lines, word, character) to ouput only 1 of those informations
+```
+```
+wc <filename>                 # tells you how many lines, words and characters there are in a file. Use -lwc (lines, word, character) to ouput only 1 of 
+those informations
+```
+```
 gzip <filename>               # compresses files using gzip algorithm
+```
+```
 gunzip <filename>             # uncompresses files compressed by gzip
+```
 gzcat <filename>              # lets you look at gzipped file without actually having to gunzip it
+```
+```
 grep <pattern> <filenames>    # looks for the string in the files
+```
+```  
 grep -r <pattern> <dir>       # search recursively for pattern in directory
+```
+```
 sed 's/<pattern>/<replacement>/g' <filename> # replace pattern in file with replacement value to std output the character after s (/) is the delimeter 
+```
+```
 sed -i 's/<pattern>/<replacement>/g' <filename> # replace pattern in file with replacement value in place
+```
+```
 tr <first pattern> <second patten> # quickly translate the value to other value.
-# Should know but not use much at all
+```
+### 03.2Should know but not use much at all
+```
 find . -name <name> <type>    # searches for a file or a directory in the current directory and all its sub-directories by its name
+```
+```  
 sort <filename>               # sorts the contents of a text file line by line in alphabetical order, use -n for numeric sort and -r for reversing order.
+```
+```  
 sort -t -k <filename>         # sorts the contents on specific sort key field starting from 1, using the field separator t.
+```
+```
 chmod -options <filename>     # lets you change the read, write, and execute permissions on your files (more infos: SUID, GUID)
+```
+```
 diff <filename1> <filename2>  # compares files, and shows where they differ
+```
+```
 echo <string>                 # show line on screen, can be used with variables but have null value in stdout
+```
+```
 printf <string>               # similar to echo, but the stdout can be put to a file     
-
+```
 ##############################################################################
 # SSH, SYSTEM INFO & NETWORK COMMANDS
 ##############################################################################

@@ -1,4 +1,5 @@
 #!/bin/bash
+# ref: https://github.com/LeCoupa/awesome-cheatsheets/blob/master/languages/bash.sh
 ##############################################################################
 # SHORTCUTS and HISTORY
 ##############################################################################

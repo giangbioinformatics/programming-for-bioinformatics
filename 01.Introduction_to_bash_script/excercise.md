@@ -121,3 +121,17 @@ for ACCESSION in $SRA_ACCESSIONS; do
   done
 done
 ```
+# 04.Cutadapt:
+Write a bash script that uses the command-line tool cutadapt to trim adapter sequences from a set of Illumina RNA-seq data files in FASTQ format.
+
+# 05. Homologous protein domain
+Download a set of protein sequence files in FASTA format from a public database, such as UniProt, and write a bash script that uses the command-line tool hmmscan to search for homologous protein domains.
+# 06. Bedtools:
+Write a bash script that uses the command-line tool bedtools to intersect two sets of genomic intervals, such as ChIP-seq peaks and gene promoters.
+# 07. Samtools:
+Download a set of genome assembly files in FASTA format from a public database, such as the NCBI Genome database, and write a bash script that uses the command-line tool samtools to align RNA-seq reads to the genome and generate a BAM file.
+# 08. Making whole genome for bateria
+
+# 09. Evaluate the genome complete or not complete
+
+# 10. Give the annotation for genome

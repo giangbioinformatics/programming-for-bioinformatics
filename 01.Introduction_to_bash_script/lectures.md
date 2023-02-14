@@ -1,12 +1,5 @@
 Acknowledgement: https://github.com/LeCoupa/awesome-cheatsheets/blob/master/languages/bash.sh 
 
-Table of contents
-  * [1. Shortcut and history](#1-shortcut-and-history)
-  * [2. Directory and file related command](#2-directory-and-file-related-command)
-  * [3. Basic bash](#3-basic-bash)
-    + [3.1 Basic command](#31-basic-command)
-    + [3.2 File processing only](#32-file-processing-only)
-    + [3.3 Should know](#33-should-know)
 ## 1. Shortcut and history
 | Shortcut  | Function |
 | ------------- | ------------- |
@@ -69,8 +62,15 @@ Table of contents
 | sed 's///g'                          | replace pattern in file with replacement value to std output the character after s (/) is the delimeter                  | cat demo3| sed 's/giang/Giang/g'                             |
 | sed -i 's///g'                       | replace pattern in file with replacement value in place                                                                  | sed -i 's/giang/Giang/g' demo3.txt                              |
 | tr <pattern1> <pattern2>   | quickly translate the value to other value.                                                                              | tr "a" "A"                             |
-                         
-### 3.3 Should know
+### 3.3 Install tools
+Most of tools can be installed from source lists. At least you should know the command below:  
+sudo apt-get install <tool_name>
+Example:
+```
+sudo apt-get install fastqc
+```
+Note: The sudo is required because you have to install on the location where super user can be written, execute and reads.
+### 3.4 Should know
 | Command                      | Function                                                                                                                  | Example |
 |------------------------------|---------------------------------------------------------------------------------------------------------------------------|---------|
 | find . -name <file_name>             | searches for a file or a directory in the current directory and all its sub-directories by its name                      | find . -name giang*                             |

@@ -70,7 +70,41 @@ Example:
 sudo apt-get install fastqc
 ```
 Note: The sudo is required because you have to install on the location where super user can be written, execute and reads.
-### 3.4 Should know
+### 3.4 Permissions 
+In Linux, file and folder modes refer to the permissions that control who can read, write, and execute a file or folder. These permissions are represented by a set of three octal digits (ranging from 0 to 7) that are assigned to three different groups of users: the owner of the file or folder, members of the file or folder's group, and all other users.
+
+Here is a breakdown of the three digits that make up the file and folder mode:
+
+The first digit represents the permissions for the file or folder owner.
+
+0: No permissions
+1: Execute permission
+2: Write permission
+3: Write and execute permissions
+4: Read permission
+5: Read and execute permissions
+6: Read and write permissions
+7: Read, write, and execute permissions
+
+The second digit represents the permissions for members of the file or folder's group.
+
+Same as above.
+The third digit represents the permissions for all other users.
+
+Same as above.
+For example, a file with mode 644 would have read and write permissions for the owner, and only read permission for members of the file's group and all other users. A folder with mode 755 would have read, write, and execute permissions for the owner, and read and execute permissions for members of the folder's group and all other users.
+
+Example:
+```
+# Set permissions for a file
+chmod 644 myfile.txt
+
+# Set permissions for a folder and its contents recursively
+chmod -R 755 myfolder
+```
+  
+These permissions can be viewed and modified using the chmod command in the Linux terminal.
+### 3.5 Should know
 | Command                      | Function                                                                                                                  | Example |
 |------------------------------|---------------------------------------------------------------------------------------------------------------------------|---------|
 | find . -name <file_name>             | searches for a file or a directory in the current directory and all its sub-directories by its name                      | find . -name giang*                             |

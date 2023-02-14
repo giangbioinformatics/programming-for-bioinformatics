@@ -77,14 +77,14 @@ Here is a breakdown of the three digits that make up the file and folder mode:
 
 The first digit represents the permissions for the file or folder owner.
 
-0: No permissions
-1: Execute permission
-2: Write permission
-3: Write and execute permissions
-4: Read permission
-5: Read and execute permissions
-6: Read and write permissions
-7: Read, write, and execute permissions
+0: No permissions  
+1: Execute permission  
+2: Write permission  
+3: Write and execute permissions  
+4: Read permission    
+5: Read and execute permissions  
+6: Read and write permissions  
+7: Read, write, and execute permissions  
 
 The second digit represents the permissions for members of the file or folder's group.
 

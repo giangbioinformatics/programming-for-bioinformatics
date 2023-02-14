@@ -123,11 +123,77 @@ done
 ```
 # 04.Cutadapt:
 Write a bash script that uses the command-line tool cutadapt to trim adapter sequences from a set of Illumina RNA-seq data files in FASTQ format.
+Using prevous id, dont need to check md5. Get the ideas, then, when you work on your real cases, just remember to do it.
+```
+#!/bin/bash
 
+# Set the SRA accessions for the RNA-seq data files
+SRA_ACCESSIONS="SRR123456 SRR789012 SRR345678"
+
+# Loop through each SRA accession and download the FASTQ file
+for ACCESSION in $SRA_ACCESSIONS; do
+  fastq-dump --outdir . --gzip --skip-technical --readids --dumpbase --split-3 --clip "$ACCESSION"
+done
+
+# Set the adapter sequence
+ADAPTER="AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
+
+# Loop through each downloaded FASTQ file and trim adapter sequences
+for FILE in *.fastq.gz; do
+  # Trim the adapter sequences using cutadapt
+  cutadapt -a "$ADAPTER" -o "${FILE%%.*}.trimmed.fastq.gz" "$FILE"
+
+  # Remove the original FASTQ file
+  rm "$FILE"
+done
+```
 # 05. Homologous protein domain
 Download a set of protein sequence files in FASTA format from a public database, such as UniProt, and write a bash script that uses the command-line tool hmmscan to search for homologous protein domains.
+```
+#!/bin/bash
+
+# Set the UniProt accessions for the protein sequences
+UNIPROT_ACCESSIONS="P12345 P67890 Q98765"
+
+# Loop through each UniProt accession and download the corresponding FASTA file
+for ACCESSION in $UNIPROT_ACCESSIONS; do
+  wget -O "${ACCESSION}.fasta" "https://www.uniprot.org/uniprot/${ACCESSION}.fasta"
+done
+
+# Download the Pfam database
+wget ftp://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam33.0/Pfam-A.hmm.gz
+gunzip Pfam-A.hmm.gz
+
+# Run hmmscan on each protein sequence file and output the results to a text file
+for FILE in *.fasta; do
+  # Run hmmscan on the protein sequence file using the Pfam-A database
+  hmmscan --tblout "${FILE%%.*}.txt" Pfam-A.hmm "$FILE"
+
+  # Print the results to the screen
+  echo "Results for ${FILE}:"
+  cat "${FILE%%.*}.txt"
+done
+```
+
 # 06. Bedtools:
 Write a bash script that uses the command-line tool bedtools to intersect two sets of genomic intervals, such as ChIP-seq peaks and gene promoters.
+Move to NCBI search for bed file to test the script below.
+```
+#!/bin/bash
+
+# Set the file names for the two sets of genomic intervals
+PEAKS_FILE="peaks.bed"
+PROMOTERS_FILE="promoters.bed"
+
+# Use bedtools to intersect the two sets of genomic intervals and output the results to a new file
+bedtools intersect -a "$PEAKS_FILE" -b "$PROMOTERS_FILE" > intersect.bed
+
+# Count the number of intersecting intervals
+INTERSECTION_COUNT=$(wc -l < intersect.bed)
+
+# Print the number of intersecting intervals to the screen
+echo "The number of intersecting intervals is: $INTERSECTION_COUNT"
+```
 # 07. Samtools:
 Download a set of genome assembly files in FASTA format from a public database, such as the NCBI Genome database, and write a bash script that uses the command-line tool samtools to align RNA-seq reads to the genome and generate a BAM file.
 # 08. Making whole genome for bateria

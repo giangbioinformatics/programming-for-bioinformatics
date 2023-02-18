@@ -21,7 +21,7 @@ wget https://zenodo.org/record/3736457/files/1_control_psbA3_A_2019_minq7.fastq
 
 # Fastqc and multiqc
 fastqc *.fastq
-multiqc *.html
+multiqc .
 ```
 Note: Should check md5 check sum for making sure that the file is fully donwload.
 md5sum <file_name>

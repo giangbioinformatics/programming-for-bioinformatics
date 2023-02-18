@@ -1,0 +1,4 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	1_control_psbA3_A_2019_minq7	/home/nguyen/Desktop/Projects/programming-for-bioinformatics/01.introduction_to_bash_script/practice/01.quality_control/fastqc_example/1_control_psbA3_A_2019_minq7_fastqc.zip
+FastQC	all_sections	1_control_psbA3_2019_minq7	/home/nguyen/Desktop/Projects/programming-for-bioinformatics/01.introduction_to_bash_script/practice/01.quality_control/fastqc_example/1_control_psbA3_2019_minq7_fastqc.zip
+FastQC	all_sections	1_control_ITS2_2019_minq7	/home/nguyen/Desktop/Projects/programming-for-bioinformatics/01.introduction_to_bash_script/practice/01.quality_control/fastqc_example/1_control_ITS2_2019_minq7_fastqc.zip

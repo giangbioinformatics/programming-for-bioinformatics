@@ -51,44 +51,46 @@ export PATH=${PATH}:${HOME}/edirect
 # efetch to get the sequence
 
 # loop to each ID and put the sequence into fasta file
+
+# grep pattern "GTGGTGCGACATTTAGGGAAGGCAGAAAGTAG" in fasta file
+
+
 ```
 # 03. NCBI SRA download fastq and check quality 
 Download a set of RNA-seq data files in FASTQ format from a public database, such as the Sequence Read Archive (SRA), and write a bash script that uses the command-line tool fastqc to assess the quality of the reads 
-accession are 
+accession are defined as below:  
+SRA_ACCESSIONS="SRR23502807 	SRR23502808	 SRR23502809"
+
 ```
+# Install SRA tools kit
+wget --output-document sratoolkit.tar.gz https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz
+# Unzip
+tar -vxzf sratoolkit.tar.gz
+# Better with add to bashrc
+export PATH=$PATH:$PWD/sratoolkit.3.0.1-ubuntu64/bin
+# Check tools exist
+which fastq-dump
+fastq-dump --help
+
+# Download file
 SRA_ACCESSIONS="SRR123456 SRR789012 SRR345678"
-```
-
-```
-#!/bin/bash
-
 # Set the output directory for the FASTQC reports
 OUTPUT_DIR="fastqc_reports"
 
 # Create the output directory if it doesn't already exist
-if [ ! -d "$OUTPUT_DIR" ]; then
-  mkdir "$OUTPUT_DIR"
-fi
+
 
 # Define an array of SRA accession numbers for the RNA-seq data files
-ACCESSIONS=(SRR1139775 SRR1139776 SRR1139777)
+
 
 # Loop over each accession number and download the corresponding FASTQ file
-for ACCESSION in "${ACCESSIONS[@]}"; do
-  echo "Downloading FASTQ file for $ACCESSION"
-  fastq-dump --outdir . --gzip --skip-technical --readids --dumpbase --split-3 --clip "$ACCESSION"
-  
-  # Run FASTQC on the downloaded FASTQ file and save the report to the output directory
-  echo "Running FASTQC for $ACCESSION"
-  fastqc --outdir "$OUTPUT_DIR" "${ACCESSION}.fastq.gz"
-done
+
 ```
 Update script for md5 check, redownload until they are matched
 ```
 #!/bin/bash
-
 # Set the SRA accessions for the RNA-seq data files
-SRA_ACCESSIONS="SRR123456 SRR789012 SRR345678"
+SRA_ACCESSIONS="SRR123456  SRR789012  SRR345678"
 
 # Loop through each SRA accession and download the FASTQ file
 for ACCESSION in $SRA_ACCESSIONS; do
@@ -120,27 +122,17 @@ done
 Write a bash script that uses the command-line tool cutadapt to trim adapter sequences from a set of Illumina RNA-seq data files in FASTQ format.
 Using prevous id, dont need to check md5. Get the ideas, then, when you work on your real cases, just remember to do it.
 ```
-#!/bin/bash
+# Install tools
+sudo apt install cutadapt
 
-# Set the SRA accessions for the RNA-seq data files
-SRA_ACCESSIONS="SRR123456 SRR789012 SRR345678"
+# Download RNA-seq data from SRA (limit to 10 MB)
+fastq-dump --outdir fastq --gzip --skip-technical --readids --dumpbase --split-3 --clip --bytes 10000000 SRR5222442
 
-# Loop through each SRA accession and download the FASTQ file
-for ACCESSION in $SRA_ACCESSIONS; do
-  fastq-dump --outdir . --gzip --skip-technical --readids --dumpbase --split-3 --clip "$ACCESSION"
-done
+# Trim adapters using cutadapt
+cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -o trimmed.fastq.gz fastq/SRR5222442.fastq.gz
 
-# Set the adapter sequence
-ADAPTER="AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
-
-# Loop through each downloaded FASTQ file and trim adapter sequences
-for FILE in *.fastq.gz; do
-  # Trim the adapter sequences using cutadapt
-  cutadapt -a "$ADAPTER" -o "${FILE%%.*}.trimmed.fastq.gz" "$FILE"
-
-  # Remove the original FASTQ file
-  rm "$FILE"
-done
+# Remove intermediate files
+rm -r fastq
 ```
 # 05. Homologous protein domain
 Download a set of protein sequence files in FASTA format from a public database, such as UniProt, and write a bash script that uses the command-line tool hmmscan to search for homologous protein domains.

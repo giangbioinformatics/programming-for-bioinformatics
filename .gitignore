@@ -12,9 +12,3 @@ bin-release/
 *.air
 *.ipa
 *.apk
-
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.
-09.Simple_infrastructure_for_bioinformatics_HPC_slurm_and_ggdrive.md
-10.Start_up_small_company.md

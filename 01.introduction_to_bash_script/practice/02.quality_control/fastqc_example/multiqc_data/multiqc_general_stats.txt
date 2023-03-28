@@ -1,4 +1,0 @@
-Sample	FastQC_mqc-generalstats-fastqc-percent_duplicates	FastQC_mqc-generalstats-fastqc-percent_gc	FastQC_mqc-generalstats-fastqc-avg_sequence_length	FastQC_mqc-generalstats-fastqc-percent_fails	FastQC_mqc-generalstats-fastqc-total_sequences
-1_control_ITS2_2019_minq7	0.0	47.0	235.99566880820038	30.0	13853.0
-1_control_psbA3_2019_minq7	0.0	45.0	198.71038990308767	30.0	4437.0
-1_control_psbA3_A_2019_minq7	0.0	45.0	198.26211945362022	30.0	22402.0

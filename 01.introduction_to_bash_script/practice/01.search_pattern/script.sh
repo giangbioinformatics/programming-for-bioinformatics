@@ -5,7 +5,6 @@ echo "export PATH=\$PATH:\$HOME/edirect" >> $HOME/.bash_profile
 # Export to load tool immediately
 export PATH=${PATH}:${HOME}/edirect
 
-
 # Define the NCBI database and search term
 db="nuccore"
 search_term="Homo sapiens[Organism] AND liver[All Fields]"

@@ -1,35 +1,6 @@
-# 01. QC fastq file
-Download fastq file and make the quality control using fastqc, multiqc for combining qc result
-Using the provided tools:  
-+ Bashscript
-+ Fastqc
-+ Multiqc
-+ Download at least 3 files from: https://zenodo.org/record/3736457#.Y-uoY3UzbIU
-
-```
-# Install tools 
-
-
-# Create directory and cd to this dir
-
-
-# Download files using browser or wget or curl
-
-
-# Run fastqc and multiqc
-
-
-```
-Note: Should check md5 check sum for making sure that the file is fully donwload.
-md5sum <file_name>
-```
-md5sum 1_control_ITS2_2019_minq7.fastq
-```
-
-# 02. Searching pattern: 
+# 01. Searching pattern: 
 E-tools that provided 
 https://dataguide.nlm.nih.gov/eutilities/utilities.html
-
 
 This exercise is for studying only, not a research.
 I have a sequences hat I sequenced using Download a set of DNA sequence files in FASTA format from a public database, such as NCBI, and write a bash script 
@@ -39,184 +10,36 @@ Using the provided tools:
 + Bash script  
 + Esearch: For searching the accession number related to query
 + Efetch: For downloading the fastq file 
-```
-# Install search
-sh -c "$(wget -q ftp://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh -O -)"
-# Add to barchrc
-echo "export PATH=\$PATH:\$HOME/edirect" >> $HOME/.bash_profile
-# Export to load tool immediately
-export PATH=${PATH}:${HOME}/edirect
-# esearch to look for data
 
-# efetch to get the sequence
+# 02. Bedtools:
+Write a bash script that uses the command-line tool bedtools to intersect two sets of genomic intervals, such as ChIP-seq peaks and gene promoters.
+Move to NCBI search for bed file to test the script below.
 
-# loop to each ID and put the sequence into fasta file
+# 03. Homologous protein domain
+Download a set of protein sequence files in FASTA format from a public database, such as UniProt, and write a bash script that uses the command-line tool hmmscan to search for homologous protein domains.
 
-# grep pattern "GTGGTGCGACATTTAGGGAAGGCAGAAAGTAG" in fasta file
-
-
-```
-# 03. NCBI SRA download fastq and check quality 
+# 04. Quality control
+Download fastq file and make the quality control using fastqc, multiqc for combining qc result
+Using the provided tools:  
++ Bashscript
++ Fastqc
++ Multiqc
++ Download at least 3 files from: https://zenodo.org/record/3736457#.Y-uoY3UzbIU
+# 05. NCBI SRA download fastq and check quality 
 Download a set of RNA-seq data files in FASTQ format from a public database, such as the Sequence Read Archive (SRA), and write a bash script that uses the command-line tool fastqc to assess the quality of the reads 
 accession are defined as below:  
 SRA_ACCESSIONS="SRR23502807 	SRR23502808	 SRR23502809"
+# 06.Cutadapt,trimmomatic and fastp:
+Write a bash script that uses the command-line tool cutadapt to trim adapter sequences from a set of Illumina RNA-seq data files in FASTQ format. trimmomatic to trim quality and fastp for all of these tasks.
 
-```
-# Install SRA tools kit
-wget --output-document sratoolkit.tar.gz https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/current/sratoolkit.current-ubuntu64.tar.gz
-# Unzip
-tar -vxzf sratoolkit.tar.gz
-# Better with add to bashrc
-export PATH=$PATH:$PWD/sratoolkit.3.0.1-ubuntu64/bin
-# Check tools exist
-which fastq-dump
-fastq-dump --help
-
-# Download file
-SRA_ACCESSIONS="SRR123456 SRR789012 SRR345678"
-# Set the output directory for the FASTQC reports
-OUTPUT_DIR="fastqc_reports"
-
-# Create the output directory if it doesn't already exist
-
-
-# Define an array of SRA accession numbers for the RNA-seq data files
-
-
-# Loop over each accession number and download the corresponding FASTQ file
-
-```
-Update script for md5 check, redownload until they are matched
-```
-#!/bin/bash
-# Set the SRA accessions for the RNA-seq data files
-SRA_ACCESSIONS="SRR123456  SRR789012  SRR345678"
-
-# Loop through each SRA accession and download the FASTQ file
-for ACCESSION in $SRA_ACCESSIONS; do
-  # Download the FASTQ file
-  fastq-dump --outdir . --gzip --skip-technical --readids --dumpbase --split-3 --clip "$ACCESSION"
-
-  # Set the expected MD5 checksum and output file name
-  EXPECTED_MD5=$(cat "${ACCESSION}.fastq.gz.md5" | cut -d' ' -f1)
-  OUTPUT_FILE="${ACCESSION}.fastq.gz"
-
-  # Download the file and check the MD5 checksum
-  while true; do
-    # Download the file and calculate the MD5 checksum
-    wget -q "https://example.com/$OUTPUT_FILE" -O "$OUTPUT_FILE"
-    CALCULATED_MD5=$(md5sum "$OUTPUT_FILE" | cut -d' ' -f1)
-
-    # Compare the calculated checksum to the expected checksum
-    if [ "$CALCULATED_MD5" != "$EXPECTED_MD5" ]; then
-      echo "Error: MD5 checksum does not match for $OUTPUT_FILE, re-downloading file"
-      rm "$OUTPUT_FILE"
-    else
-      echo "MD5 checksum matches for $OUTPUT_FILE, file is valid"
-      break
-    fi
-  done
-done
-```
-# 04.Cutadapt:
-Write a bash script that uses the command-line tool cutadapt to trim adapter sequences from a set of Illumina RNA-seq data files in FASTQ format.
-Using prevous id, dont need to check md5. Get the ideas, then, when you work on your real cases, just remember to do it.
-```
-# Install tools
-sudo apt install cutadapt
-
-# Download RNA-seq data from SRA (limit to 10 MB)
-fastq-dump --outdir fastq --gzip --skip-technical --readids --dumpbase --split-3 --clip --bytes 10000000 SRR5222442
-
-# Trim adapters using cutadapt
-cutadapt -a AGATCGGAAGAGCACACGTCTGAACTCCAGTCA -o trimmed.fastq.gz fastq/SRR5222442.fastq.gz
-
-# Remove intermediate files
-rm -r fastq
-```
-# 05. Homologous protein domain
-Download a set of protein sequence files in FASTA format from a public database, such as UniProt, and write a bash script that uses the command-line tool hmmscan to search for homologous protein domains.
-```
-#!/bin/bash
-
-# Set the UniProt accessions for the protein sequences
-UNIPROT_ACCESSIONS="P12345 P67890 Q98765"
-
-# Loop through each UniProt accession and download the corresponding FASTA file
-for ACCESSION in $UNIPROT_ACCESSIONS; do
-  wget -O "${ACCESSION}.fasta" "https://www.uniprot.org/uniprot/${ACCESSION}.fasta"
-done
-
-# Download the Pfam database
-wget ftp://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam33.0/Pfam-A.hmm.gz
-gunzip Pfam-A.hmm.gz
-
-# Run hmmscan on each protein sequence file and output the results to a text file
-for FILE in *.fasta; do
-  # Run hmmscan on the protein sequence file using the Pfam-A database
-  hmmscan --tblout "${FILE%%.*}.txt" Pfam-A.hmm "$FILE"
-
-  # Print the results to the screen
-  echo "Results for ${FILE}:"
-  cat "${FILE%%.*}.txt"
-done
-```
-
-# 06. Bedtools:
-Write a bash script that uses the command-line tool bedtools to intersect two sets of genomic intervals, such as ChIP-seq peaks and gene promoters.
-Move to NCBI search for bed file to test the script below.
-```
-#!/bin/bash
-
-# Set the file names for the two sets of genomic intervals
-PEAKS_FILE="peaks.bed"
-PROMOTERS_FILE="promoters.bed"
-
-# Use bedtools to intersect the two sets of genomic intervals and output the results to a new file
-bedtools intersect -a "$PEAKS_FILE" -b "$PROMOTERS_FILE" > intersect.bed
-
-# Count the number of intersecting intervals
-INTERSECTION_COUNT=$(wc -l < intersect.bed)
-
-# Print the number of intersecting intervals to the screen
-echo "The number of intersecting intervals is: $INTERSECTION_COUNT"
-```
 # 07. Samtools:
 Download a set of genome assembly files in FASTA format from a public database, such as the NCBI Genome database, and write a bash script that uses the command-line tool samtools to align RNA-seq reads to the genome and generate a BAM file.
-```
-#!/bin/bash
 
-# Set the NCBI accession number for the genome assembly and the SRA accession number for the RNA-seq reads
-GENOME_ACCESSION="GCF_000001405.26"
-READS_ACCESSION="SRR3051647"
-
-# Download the genome assembly file in FASTA format
-wget "ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/$GENOME_ACCESSION/$GENOME_ACCESSION_genomic.fna.gz"
-gunzip "$GENOME_ACCESSION_genomic.fna.gz"
-
-# Download the RNA-seq reads in FASTQ format using the SRA toolkit
-fastq-dump "$READS_ACCESSION"
-
-# Build a genome index for STAR
-STAR --runMode genomeGenerate --genomeDir star_index --genomeFastaFiles "$GENOME_ACCESSION_genomic.fna" --runThreadN 4
-
-# Align the RNA-seq reads to the genome using STAR
-STAR --genomeDir star_index --readFilesIn "$READS_ACCESSION.fastq" --runThreadN 4 --outSAMtype BAM SortedByCoordinate --outFileNamePrefix aligned
-
-# Index the BAM file
-samtools index aligned.bam
-```
 # 08. Making whole genome for bateria using spades
-```
-fastq-dump --split-files SRR1234567
-trimmomatic PE -phred33 SRR1234567_1.fastq SRR1234567_2.fastq SRR1234567_1.trimmed.fastq SRR1234567_1.unpaired.fastq SRR1234567_2.trimmed.fastq SRR1234567_2.unpaired.fastq ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
-spades.py -1 SRR1234567_1.trimmed.fastq -2 SRR1234567_2.trimmed.fastq -o spades_output
-```
+Using the fastq files from Illumina platform (short reads), de novo assembly and then evaluate the genome on later steps.
 # 09. Evaluate the genome complete or not complete
 There are a few metrics commonly used to assess the completeness of a bacterial genome assembly:
-
 Genome size: The genome size of the assembly should be consistent with the expected size for the organism.
-
 N50 and L50 values: These values give an indication of the contiguity of the assembly. The N50 value is the length of the shortest contig such that 50% of the genome is contained in contigs of that length or longer. The L50 value is the number of contigs required to cover 50% of the genome. Higher N50 and lower L50 values are generally indicative of a more contiguous assembly.
 
 Completeness and redundancy: The completeness of the assembly can be assessed using tools like CheckM or BUSCO, which compare the assembly to a set of conserved genes that are expected to be present in all bacterial genomes. These tools can also estimate the level of redundancy in the assembly, which can be an indicator of misassemblies or other errors.
@@ -254,18 +77,8 @@ For example, suppose you have an assembly with 10 contigs of lengths 1000, 800, 
 3600 (1000 + 800 + 700 + 600 + 500)
 4000 (1000 + 800 + 700 + 600 + 500 + 400)
 ```
-```
-#!/bin/bash
-
-# Run CheckM on the SPAdes assembly
-checkm lineage_wf -t 4 -x fa spades_assembly/ checkm_output/
-
-# Print the completeness and contamination estimates
-cat checkm_output/storage/bin_stats_ext.tsv
-```
 In this script, checkm lineage_wf runs the CheckM workflow on the SPAdes assembly. The -t 4 option specifies that CheckM should use four threads for parallel processing, and the -x fa option specifies that the input files are in FASTA format. spades_assembly/ is the path to the directory containing the SPAdes assembly files, and checkm_output/ is the directory where CheckM output files will be written.
 
 After running CheckM, you can view the completeness and contamination estimates by printing the bin_stats_ext.tsv file in the checkm_output/storage directory. The completeness estimate is listed under the Completeness column, and the contamination estimate is listed under the Contamination column.
 # 10. Give the annotation for genome
-```
-```
+Base on the sequence of de novo genome, predict the existed genes and give their annotation.
